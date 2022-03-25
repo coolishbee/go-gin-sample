@@ -1,0 +1,78 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "An example of gin",
+        "title": "Golang Gin API",
+        "termsOfService": "https://github.com/coolishbee/go-gin-sample",
+        "contact": {},
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/coolishbee/go-gin-sample/blob/main/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/auth": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Post Auth",
+                "parameters": [
+                    {
+                        "description": "socialAuth Body",
+                        "name": "auth",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.socialAuth"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.socialAuth": {
+            "type": "object",
+            "required": [
+                "login_token",
+                "login_type"
+            ],
+            "properties": {
+                "login_token": {
+                    "type": "string"
+                },
+                "login_type": {
+                    "type": "string"
+                }
+            }
+        },
+        "app.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
