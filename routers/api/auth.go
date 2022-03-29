@@ -57,11 +57,11 @@ func GetAuth(c *gin.Context) {
 
 	tokenInfo, errCode := verifyGoogleIDToken(c.Request.Context(), authJson.LoginToken)
 	if errCode == e.ERROR_AUTH_CHECK_TOKEN_FAIL {
-		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
+		appG.Response(http.StatusOK, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
 		return
 	}
 	if errCode == e.ERROR_AUTH_INVALID_TOKEN {
-		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_INVALID_TOKEN, nil)
+		appG.Response(http.StatusOK, e.ERROR_AUTH_INVALID_TOKEN, nil)
 		return
 	}
 
@@ -75,7 +75,7 @@ func GetAuth(c *gin.Context) {
 	}
 	exists, err := authService.ExistByUserID()
 	if err != nil {
-		appG.Response(http.StatusInternalServerError, e.ERROR_DB, nil)
+		appG.Response(http.StatusOK, e.ERROR_DB, nil)
 		return
 	}
 	if exists {
@@ -85,7 +85,7 @@ func GetAuth(c *gin.Context) {
 		//add
 		err = authService.Add()
 		if err != nil {
-			appG.Response(http.StatusInternalServerError, e.ERROR_DB, nil)
+			appG.Response(http.StatusOK, e.ERROR_DB, nil)
 			return
 		}
 	}
@@ -110,6 +110,9 @@ func verifyGoogleIDToken(ctx context.Context, token string) (*TokenInfo, int) {
 	//tokenInfo := new(TokenInfo)
 	var tokenInfo TokenInfo
 	err = mapstructure.Decode(validTok.Claims, &tokenInfo)
+	if err != nil {
+		log.Println("Decode err")
+	}
 
 	return &tokenInfo, e.SUCCESS
 }

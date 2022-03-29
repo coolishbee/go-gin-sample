@@ -12,17 +12,17 @@ import (
 func BindAndValid(c *gin.Context, json interface{}) (int, int) {
 	err := c.Bind(json)
 	if err != nil {
-		return http.StatusBadRequest, e.INVALID_PARAMS
+		return http.StatusOK, e.INVALID_PARAMS
 	}
 
 	valid := validation.Validation{}
 	check, err := valid.Valid(json)
 	if err != nil {
-		return http.StatusInternalServerError, e.ERROR
+		return http.StatusOK, e.ERROR
 	}
 	if !check {
 		MarkErrors(valid.Errors)
-		return http.StatusBadRequest, e.INVALID_PARAMS
+		return http.StatusOK, e.INVALID_PARAMS
 	}
 
 	return http.StatusOK, e.SUCCESS
