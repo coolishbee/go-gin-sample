@@ -47,13 +47,15 @@ $ go run main.go
 - RESTful API
 - Gorm
 - Swagger
-- logging
-- Jwt-go
 - Gin
 - App configurable
-- Redis
 
 ## TODO
 
 - Redis
+- logging
 - Cron
+
+## Reference
+
+* https://github.com/eddycjy/go-gin-example
