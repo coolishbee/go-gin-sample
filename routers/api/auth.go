@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jameschun7/go-gin-sample/pkg/app"
@@ -42,14 +41,29 @@ type TokenInfo struct {
 // @Failure 500 {object} app.Response
 // @Router /auth [post]
 func GetAuth(c *gin.Context) {
+
+	// //test log
+	// body := c.Request.Body
+	// value, err := ioutil.ReadAll(body)
+	// if err != nil {
+	// 	log.Println(err.Error())
+	// }
+	// var data map[string]interface{}
+	// json.Unmarshal([]byte(value), &data)
+	// doc, _ := json.Marshal(data)
+	// log.Printf("%s", doc)
+
 	var (
 		appG     = app.Gin{C: c}
 		authJson socialAuth
 	)
 
-	httpCode, errCode := app.BindAndValid(c, &authJson)
+	errCode := app.BindAndValid(c, &authJson)
 	if errCode != e.SUCCESS {
-		appG.Response(httpCode, errCode, nil)
+		appG.Response(errCode, map[string]string{
+			"userID":   "",
+			"username": "",
+		})
 		return
 	}
 
@@ -57,25 +71,29 @@ func GetAuth(c *gin.Context) {
 
 	tokenInfo, errCode := verifyGoogleIDToken(c.Request.Context(), authJson.LoginToken)
 	if errCode == e.ERROR_AUTH_CHECK_TOKEN_FAIL {
-		appG.Response(http.StatusOK, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
+
+		appG.Response(e.ERROR_AUTH_CHECK_TOKEN_FAIL, map[string]string{
+			"userID":   "",
+			"username": "",
+		})
 		return
 	}
 	if errCode == e.ERROR_AUTH_INVALID_TOKEN {
-		appG.Response(http.StatusOK, e.ERROR_AUTH_INVALID_TOKEN, nil)
+		appG.Response(e.ERROR_AUTH_INVALID_TOKEN, nil)
 		return
 	}
 
 	authService := auth_service.Auth{
 		UserID:      tokenInfo.Sub,
 		Username:    tokenInfo.Name,
-		LoginType:   "google",
+		LoginType:   "GOOGLE",
 		Country:     "Korea",
 		Email:       tokenInfo.Email,
 		UserPicture: tokenInfo.Picture,
 	}
 	exists, err := authService.ExistByUserID()
 	if err != nil {
-		appG.Response(http.StatusOK, e.ERROR_DB, nil)
+		appG.Response(e.ERROR_DB, nil)
 		return
 	}
 	if exists {
@@ -85,7 +103,7 @@ func GetAuth(c *gin.Context) {
 		//add
 		err = authService.Add()
 		if err != nil {
-			appG.Response(http.StatusOK, e.ERROR_DB, nil)
+			appG.Response(e.ERROR_DB, nil)
 			return
 		}
 	}
@@ -95,7 +113,10 @@ func GetAuth(c *gin.Context) {
 	// log.Printf("Exp: %d", tokenInfo.Exp)
 
 	//response
-	appG.Response(http.StatusOK, e.SUCCESS, nil)
+	appG.Response(e.SUCCESS, map[string]string{
+		"userID":   tokenInfo.Sub,
+		"username": tokenInfo.Name,
+	})
 }
 
 func verifyGoogleIDToken(ctx context.Context, token string) (*TokenInfo, int) {

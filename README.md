@@ -17,7 +17,7 @@ $ go get github.com/coolishbee/go-gin-sample
 
 ### Ready
 
-Create a **blog database** and import [SQL](https://github.com/coolishbee/go-gin-sample/blob/main/docs/sql/game_2022-03-25.sql)
+Create a **game database** and import [SQL](https://github.com/coolishbee/go-gin-sample/blob/main/docs/sql/game_2022-03-25.sql)
 
 ### Conf
 
@@ -49,12 +49,12 @@ $ go run main.go
 - Swagger
 - Gin
 - App configurable
+- Logging
 
 ## TODO
 
 - Redis
-- logging
-- Cron
+- LevelDB
 
 ## Reference
 
