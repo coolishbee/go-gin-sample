@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.7.3-MariaDB)
 # Database: game
-# Generation Time: 2022-04-17 15:17:16 +0000
+# Generation Time: 2022-04-19 15:28:44 +0000
 # ************************************************************
 
 
@@ -29,7 +29,7 @@ CREATE TABLE `player` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `player_name` varchar(50) DEFAULT NULL,
   `squad_number` varchar(50) DEFAULT NULL,
-  `team_name` varchar(11) DEFAULT NULL,
+  `team_name` varchar(50) DEFAULT NULL,
   `team_id` int(11) unsigned DEFAULT NULL,
   `nation` varchar(11) DEFAULT NULL,
   `height` int(11) unsigned DEFAULT NULL,
@@ -46,6 +46,19 @@ CREATE TABLE `player` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `player` WRITE;
+/*!40000 ALTER TABLE `player` DISABLE KEYS */;
+
+INSERT INTO `player` (`id`, `player_name`, `squad_number`, `team_name`, `team_id`, `nation`, `height`, `weight`, `age`, `foot`, `position`, `ball_control`, `dribbling`, `low_pass`, `lofted_pass`, `speed`, `jump`)
+VALUES
+	(8574,'H. LLORIS','1','TOTTENHAM WB',1,'FRANCE',188,78,34,'Left foot','GK',61,44,62,60,63,84),
+	(43063,'SON HEUNG-MIN','7','TOTTENHAM WB',1,'KOREA',183,79,28,'Right foot','LMF',86,86,78,80,93,72),
+	(43166,'M. DOHERTY','2','TOTTENHAM WB',1,'IRELAND',186,89,28,'Right foot','RB',74,73,75,80,82,81),
+	(47287,'H. KANE','10','TOTTENHAM WB',1,'ENGLAND',188,76,27,'Right foot','CF',83,78,82,84,78,80),
+	(112523,'REGUILÓN','3','TOTTENHAM WB',1,'SPAIN',178,68,24,'Left foot','LB',77,80,78,80,87,68);
+
+/*!40000 ALTER TABLE `player` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table team
@@ -55,12 +68,21 @@ DROP TABLE IF EXISTS `team`;
 
 CREATE TABLE `team` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `team_name` varchar(11) DEFAULT NULL,
-  `manager_name` varchar(11) DEFAULT NULL,
-  `formation` int(11) DEFAULT NULL,
+  `team_name` varchar(50) DEFAULT NULL,
+  `manager_name` varchar(50) DEFAULT NULL,
+  `formation` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `team` WRITE;
+/*!40000 ALTER TABLE `team` DISABLE KEYS */;
+
+INSERT INTO `team` (`id`, `team_name`, `manager_name`, `formation`)
+VALUES
+	(1,'TOTTENHAM WB','Antonio Conte','3:4:3');
+
+/*!40000 ALTER TABLE `team` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
