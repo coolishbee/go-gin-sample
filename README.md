@@ -53,6 +53,7 @@ $ go run main.go
 
 ## TODO
 
+- [Facebook Login verify access token](https://stackoverflow.com/questions/8605703/how-to-verify-facebook-access-token).
 - Redis
 - LevelDB
 
