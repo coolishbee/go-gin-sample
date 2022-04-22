@@ -2,7 +2,7 @@
 
 [![rcard](https://goreportcard.com/badge/github.com/coolishbee/go-gin-sample)](https://goreportcard.com/report/github.com/coolishbee/go-gin-sample) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/coolishbee/go-gin-sample/master/LICENSE)
 
-an simple example for gin + mariadb + swagger + google login idtoken validate.
+an simple example for gin + mariadb + swagger + social(google, facebook) login token backend validate.
 
 ## Installation
 ```
@@ -50,10 +50,11 @@ $ go run main.go
 - Gin
 - App configurable
 - Logging
+- Social Login backend validate (Google, Facebook)
 
 ## TODO
 
-- [Facebook Login verify access token](https://stackoverflow.com/questions/8605703/how-to-verify-facebook-access-token).
+- Apple login token validate
 - Redis
 - LevelDB
 

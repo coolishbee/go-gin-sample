@@ -2,7 +2,10 @@ package api
 
 import (
 	"context"
+	"fmt"
+	"io/ioutil"
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jameschun7/go-gin-sample/pkg/app"
@@ -34,6 +37,11 @@ type TokenInfo struct {
 	Exp           int
 }
 
+type AccessToken struct {
+	Token  string
+	Expiry int64
+}
+
 // @Summary Post Auth
 // @Produce  json
 // @Param auth body socialAuth true "socialAuth Body"
@@ -54,8 +62,9 @@ func GetAuth(c *gin.Context) {
 	// log.Printf("%s", doc)
 
 	var (
-		appG     = app.Gin{C: c}
-		authJson socialAuth
+		appG      = app.Gin{C: c}
+		authJson  socialAuth
+		tokenInfo *TokenInfo
 	)
 
 	errCode := app.BindAndValid(c, &authJson)
@@ -68,25 +77,31 @@ func GetAuth(c *gin.Context) {
 	}
 
 	log.Printf("token: %s", authJson.LoginToken)
+	switch authJson.LoginType {
+	case "google":
+		tokenInfo, errCode = verifyGoogleIDToken(c.Request.Context(), authJson.LoginToken)
+		if errCode == e.ERROR_AUTH_CHECK_TOKEN_FAIL {
 
-	tokenInfo, errCode := verifyGoogleIDToken(c.Request.Context(), authJson.LoginToken)
-	if errCode == e.ERROR_AUTH_CHECK_TOKEN_FAIL {
-
-		appG.Response(e.ERROR_AUTH_CHECK_TOKEN_FAIL, map[string]string{
-			"userID":   "",
-			"username": "",
-		})
-		return
-	}
-	if errCode == e.ERROR_AUTH_INVALID_TOKEN {
-		appG.Response(e.ERROR_AUTH_INVALID_TOKEN, nil)
+			appG.Response(e.ERROR_AUTH_CHECK_TOKEN_FAIL, map[string]string{
+				"userID":   "",
+				"username": "",
+			})
+			return
+		}
+		if errCode == e.ERROR_AUTH_INVALID_TOKEN {
+			appG.Response(e.ERROR_AUTH_INVALID_TOKEN, nil)
+			return
+		}
+		break
+	case "facebook":
+		verifyFacebookAccessToken(authJson.LoginToken)
 		return
 	}
 
 	authService := auth_service.Auth{
 		UserID:      tokenInfo.Sub,
 		Username:    tokenInfo.Name,
-		LoginType:   "GOOGLE",
+		LoginType:   authJson.LoginType,
 		Country:     "Korea",
 		Email:       tokenInfo.Email,
 		UserPicture: tokenInfo.Picture,
@@ -136,4 +151,29 @@ func verifyGoogleIDToken(ctx context.Context, token string) (*TokenInfo, int) {
 	}
 
 	return &tokenInfo, e.SUCCESS
+}
+
+func verifyFacebookAccessToken(token string) {
+	clientId := "2925534737733374"
+	clientSecret := "70e978dcb983a778201413a173a2d08f"
+
+	appAccessToken := clientId + "|" + clientSecret
+
+	resp, err := http.Get("https://graph.facebook.com/debug_token?input_token=" +
+		token + "&access_token=" + appAccessToken)
+
+	if err != nil {
+		fmt.Printf("Get: %s\n", err)
+
+		return
+	}
+	defer resp.Body.Close()
+
+	response, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("ReadAll: %s\n", err)
+		return
+	}
+
+	log.Printf("parseResponseBody: %s\n", string(response))
 }
