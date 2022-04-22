@@ -135,7 +135,7 @@ func GetAuth(c *gin.Context) {
 }
 
 func verifyGoogleIDToken(ctx context.Context, token string) (*TokenInfo, int) {
-	aud := "526488632616-h18cgl28r8o4jvubm8nv7jbatl6pcdi5.apps.googleusercontent.com"
+	aud := "cliend-id"
 	validTok, err := idtoken.Validate(ctx, token, aud)
 	if err != nil {
 		return nil, e.ERROR_AUTH_CHECK_TOKEN_FAIL
@@ -154,8 +154,8 @@ func verifyGoogleIDToken(ctx context.Context, token string) (*TokenInfo, int) {
 }
 
 func verifyFacebookAccessToken(token string) {
-	clientId := "2925534737733374"
-	clientSecret := "70e978dcb983a778201413a173a2d08f"
+	clientId := "app-id"
+	clientSecret := "app-secret-code"
 
 	appAccessToken := clientId + "|" + clientSecret
 
