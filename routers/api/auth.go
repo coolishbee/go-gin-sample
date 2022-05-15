@@ -69,10 +69,7 @@ func GetAuth(c *gin.Context) {
 
 	errCode := app.BindAndValid(c, &authJson)
 	if errCode != e.SUCCESS {
-		appG.Response(errCode, map[string]string{
-			"userID":   "",
-			"username": "",
-		})
+		appG.Response(errCode, nil)
 		return
 	}
 
@@ -81,20 +78,18 @@ func GetAuth(c *gin.Context) {
 	case "google":
 		tokenInfo, errCode = verifyGoogleIDToken(c.Request.Context(), authJson.LoginToken)
 		if errCode == e.ERROR_AUTH_CHECK_TOKEN_FAIL {
-
-			appG.Response(e.ERROR_AUTH_CHECK_TOKEN_FAIL, map[string]string{
-				"userID":   "",
-				"username": "",
-			})
+			appG.Response(e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
 			return
 		}
 		if errCode == e.ERROR_AUTH_INVALID_TOKEN {
 			appG.Response(e.ERROR_AUTH_INVALID_TOKEN, nil)
 			return
 		}
-		break
 	case "facebook":
 		verifyFacebookAccessToken(authJson.LoginToken)
+		return
+	default:
+		appG.Response(e.ERROR_INVALID_LOGIN_TYPE, nil)
 		return
 	}
 
