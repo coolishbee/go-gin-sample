@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.7.3-MariaDB)
 # Database: game
-# Generation Time: 2022-04-19 15:28:44 +0000
+# Generation Time: 2022-06-09 15:22:44 +0000
 # ************************************************************
 
 
@@ -20,6 +20,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Dump of table account
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `account`;
+
+CREATE TABLE `account` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(50) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `login_type` varchar(11) DEFAULT NULL,
+  `country` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `user_picture` varchar(200) DEFAULT NULL,
+  `team_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+
+INSERT INTO `account` (`id`, `user_id`, `username`, `login_type`, `country`, `email`, `user_picture`, `team_id`)
+VALUES
+	(1,'107415537797726047891','chun jay','google','Korea','chc3484mum@gmail.com','https://lh3.googleusercontent.com/a/AATXAJyYCyN5DRf35JWY7yfz-BybcSSJ5arHmgAr1b63=s96-c',1);
+
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table player
 # ------------------------------------------------------------
 
@@ -30,7 +58,7 @@ CREATE TABLE `player` (
   `player_name` varchar(50) DEFAULT NULL,
   `squad_number` varchar(50) DEFAULT NULL,
   `team_name` varchar(50) DEFAULT NULL,
-  `team_id` int(11) unsigned DEFAULT NULL,
+  `team_id` int(11) unsigned NOT NULL,
   `nation` varchar(11) DEFAULT NULL,
   `height` int(11) unsigned DEFAULT NULL,
   `weight` int(11) unsigned DEFAULT NULL,

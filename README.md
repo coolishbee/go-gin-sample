@@ -55,7 +55,8 @@ $ go run main.go
 ## TODO
 
 - Apple login token validate
-- Redis
+- Login Session management
+- RedisDB
 - LevelDB
 
 ## Reference
