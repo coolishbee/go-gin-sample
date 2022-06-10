@@ -10,21 +10,22 @@ type Account struct {
 	Country     string `json:"country"`
 	Email       string `json:"email"`
 	UserPicture string `json:"user_picture"`
+	TeamID      string `json:"team_id"`
 }
 
 // ExistAccountByUserID checks if there is a account with the same user_id
-func ExistAccountByUserID(userid string) (bool, error) {
+func ExistAccountByUserID(userid string) (*Account, error) {
 	var account Account
 	err := db.First(&account, "user_id = ?", userid).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return false, err
+		return nil, err
 	}
 
 	if account.ID > 0 {
-		return true, nil
+		return &account, nil
 	}
 
-	return false, nil
+	return nil, nil
 }
 
 func AddAccount(userId, name, loginType, country, email, picture string) error {
@@ -40,4 +41,8 @@ func AddAccount(userId, name, loginType, country, email, picture string) error {
 		return err
 	}
 	return nil
+}
+
+func GetAccount() {
+
 }

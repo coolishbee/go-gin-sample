@@ -16,8 +16,8 @@ import (
 )
 
 type socialAuth struct {
-	LoginToken string `json:"login_token" binding:"required"`
 	LoginType  string `json:"login_type" binding:"required"`
+	LoginToken string `json:"login_token" binding:"required"`
 }
 
 type TokenInfo struct {
@@ -74,6 +74,7 @@ func GetAuth(c *gin.Context) {
 	}
 
 	log.Printf("token: %s", authJson.LoginToken)
+	// logging.Info("api", "test")
 	switch authJson.LoginType {
 	case "google":
 		tokenInfo, errCode = verifyGoogleIDToken(c.Request.Context(), authJson.LoginToken)
@@ -88,6 +89,8 @@ func GetAuth(c *gin.Context) {
 	case "facebook":
 		verifyFacebookAccessToken(authJson.LoginToken)
 		return
+	case "apple":
+		verifyAppleIDToken()
 	default:
 		appG.Response(e.ERROR_INVALID_LOGIN_TYPE, nil)
 		return
@@ -101,14 +104,20 @@ func GetAuth(c *gin.Context) {
 		Email:       tokenInfo.Email,
 		UserPicture: tokenInfo.Picture,
 	}
-	exists, err := authService.ExistByUserID()
+	account, err := authService.ExistByUserID()
 	if err != nil {
 		appG.Response(e.ERROR_DB, nil)
 		return
 	}
-	if exists {
-		//get
-		log.Println("exists true")
+	if account != nil {
+		appG.Response(e.SUCCESS, map[string]string{
+			"userID":      account.UserID,
+			"userName":    account.Username,
+			"loginType":   account.LoginType,
+			"userPicture": account.UserPicture,
+			"teamID":      account.TeamID,
+		})
+		return
 	} else {
 		//add
 		err = authService.Add()
@@ -171,4 +180,21 @@ func verifyFacebookAccessToken(token string) {
 	}
 
 	log.Printf("parseResponseBody: %s\n", string(response))
+}
+
+func verifyAppleIDToken() {
+
+	resp, err := http.Get("https://appleid.apple.com/auth/keys")
+	if err != nil {
+		fmt.Printf("Get: %s\n", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("ReadAll: %s\n", err)
+		return
+	}
+	log.Printf("parseBody: %s\n", string(body))
 }

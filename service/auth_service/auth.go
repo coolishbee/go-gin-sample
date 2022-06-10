@@ -15,7 +15,7 @@ type Auth struct {
 // 	return models.CheckAuth(a.Username, a.Password)
 // }
 
-func (a *Auth) ExistByUserID() (bool, error) {
+func (a *Auth) ExistByUserID() (*models.Account, error) {
 	return models.ExistAccountByUserID(a.UserID)
 }
 
