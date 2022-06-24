@@ -14,6 +14,7 @@ $ go get github.com/coolishbee/go-gin-sample
 ### Required
 
 - MariaDB
+- RedisDB
 
 ### Ready
 
@@ -51,12 +52,12 @@ $ go run main.go
 - App configurable
 - Logging
 - Social Login backend validate (Google, Facebook)
+- Login Session management
+- RedisDB
 
 ## TODO
 
 - Apple login token validate
-- Login Session management
-- RedisDB
 - LevelDB
 
 ## Reference

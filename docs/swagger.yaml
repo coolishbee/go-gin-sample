@@ -1,11 +1,14 @@
 definitions:
-  api.socialAuth:
+  api.LoginInfo:
     properties:
+      device_id:
+        type: string
       login_token:
         type: string
       login_type:
         type: string
     required:
+    - device_id
     - login_token
     - login_type
     type: object
@@ -27,15 +30,14 @@ info:
   title: Golang Gin API
   version: "1.0"
 paths:
-  /auth:
-    post:
+  /api/autologin:
+    get:
       parameters:
-      - description: socialAuth Body
-        in: body
-        name: auth
+      - description: SessionID for login authentication
+        in: query
+        name: sessionkey
         required: true
-        schema:
-          $ref: '#/definitions/api.socialAuth'
+        type: string
       produces:
       - application/json
       responses:
@@ -47,5 +49,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/app.Response'
-      summary: Post Auth
+      summary: Get AutoLogin
+  /api/login:
+    post:
+      parameters:
+      - description: LoginInfo Body
+        in: body
+        name: auth
+        required: true
+        schema:
+          $ref: '#/definitions/api.LoginInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Post Login
 swagger: "2.0"

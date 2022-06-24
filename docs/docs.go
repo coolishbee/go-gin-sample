@@ -21,20 +21,51 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/auth": {
+        "/api/autologin": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get AutoLogin",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SessionID for login authentication",
+                        "name": "sessionkey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
             "post": {
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Post Auth",
+                "summary": "Post Login",
                 "parameters": [
                     {
-                        "description": "socialAuth Body",
+                        "description": "LoginInfo Body",
                         "name": "auth",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/api.socialAuth"
+                            "$ref": "#/definitions/api.LoginInfo"
                         }
                     }
                 ],
@@ -56,13 +87,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "api.socialAuth": {
+        "api.LoginInfo": {
             "type": "object",
             "required": [
+                "device_id",
                 "login_token",
                 "login_type"
             ],
             "properties": {
+                "device_id": {
+                    "type": "string"
+                },
                 "login_token": {
                     "type": "string"
                 },
