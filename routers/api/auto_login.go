@@ -29,12 +29,15 @@ func AutoLogin(c *gin.Context) {
 	log.Printf("key: %s", sessionkey)
 
 	session := sessions.Default(c)
-	userID := session.Get("userID").(string)
-	loginType := session.Get("loginType").(string)
-	deviceID := session.Get("deviceID").(string)
-	socialToken := session.Get("socialToken").(string)
+
 	if session.ID() == sessionkey {
 		log.Println("세션이 일치합니다")
+
+		userID := session.Get("userID").(string)
+		loginType := session.Get("loginType").(string)
+		deviceID := session.Get("deviceID").(string)
+		socialToken := session.Get("socialToken").(string)
+
 		session.Clear()
 
 		session.Set("userID", userID)
