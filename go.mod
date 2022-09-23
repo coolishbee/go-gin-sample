@@ -11,6 +11,7 @@ require (
 	github.com/mitchellh/mapstructure v1.4.3
 	github.com/swaggo/gin-swagger v1.4.1
 	github.com/swaggo/swag v1.7.9
+	github.com/unknwon/com v1.0.1
 	google.golang.org/api v0.73.0
 )
 

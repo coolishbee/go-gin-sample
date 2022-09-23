@@ -75,6 +75,59 @@
                     }
                 }
             }
+        },
+        "/api/playerlist/{team_id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get player list by team id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "TEAM ID",
+                        "name": "team_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teamlist": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get team list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

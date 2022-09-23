@@ -71,4 +71,38 @@ paths:
           schema:
             $ref: '#/definitions/app.Response'
       summary: Post Login
+  /api/playerlist/{team_id}:
+    get:
+      parameters:
+      - description: TEAM ID
+        in: path
+        name: team_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Get player list by team id
+  /api/teamlist:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Get team list
 swagger: "2.0"
