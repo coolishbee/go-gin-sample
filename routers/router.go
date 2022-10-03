@@ -31,6 +31,7 @@ func InitRouter() *gin.Engine {
 	r.GET("/api/autologin", api.AutoLogin)
 	r.GET("/api/teamlist", api.GetTeamList)
 	r.GET("/api/playerlist/:team_id", api.GetPlayerList)
+	r.POST("/api/team", api.AddTeamInfo)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r

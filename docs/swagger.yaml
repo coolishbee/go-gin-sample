@@ -12,6 +12,19 @@ definitions:
     - login_token
     - login_type
     type: object
+  api.TeamInfo:
+    properties:
+      formation:
+        type: string
+      manager_name:
+        type: string
+      team_name:
+        type: string
+    required:
+    - formation
+    - manager_name
+    - team_name
+    type: object
   app.Response:
     properties:
       code:
@@ -91,6 +104,27 @@ paths:
           schema:
             $ref: '#/definitions/app.Response'
       summary: Get player list by team id
+  /api/team:
+    post:
+      parameters:
+      - description: TeamInfo Body
+        in: body
+        name: team
+        required: true
+        schema:
+          $ref: '#/definitions/api.TeamInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Add TeamInfo
   /api/teamlist:
     get:
       produces:
