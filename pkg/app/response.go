@@ -3,8 +3,8 @@ package app
 import (
 	"net/http"
 
+	"github.com/coolishbee/go-gin-sample/pkg/e"
 	"github.com/gin-gonic/gin"
-	"github.com/jameschun7/go-gin-sample/pkg/e"
 )
 
 type Gin struct {

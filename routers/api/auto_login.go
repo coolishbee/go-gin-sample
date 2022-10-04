@@ -3,11 +3,11 @@ package api
 import (
 	"log"
 
+	"github.com/coolishbee/go-gin-sample/pkg/app"
+	"github.com/coolishbee/go-gin-sample/pkg/e"
+	"github.com/coolishbee/go-gin-sample/service/player_service"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/jameschun7/go-gin-sample/pkg/app"
-	"github.com/jameschun7/go-gin-sample/pkg/e"
-	"github.com/jameschun7/go-gin-sample/service/player_service"
 )
 
 // @Summary Get AutoLogin

@@ -3,10 +3,10 @@ package jwt
 import (
 	"net/http"
 
+	"github.com/coolishbee/go-gin-sample/pkg/e"
+	"github.com/coolishbee/go-gin-sample/pkg/util"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/jameschun7/go-gin-sample/pkg/e"
-	"github.com/jameschun7/go-gin-sample/pkg/util"
 )
 
 // JWT is jwt middleware

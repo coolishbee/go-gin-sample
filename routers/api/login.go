@@ -7,12 +7,12 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/coolishbee/go-gin-sample/pkg/app"
+	"github.com/coolishbee/go-gin-sample/pkg/e"
+	"github.com/coolishbee/go-gin-sample/pkg/logging"
+	"github.com/coolishbee/go-gin-sample/service/auth_service"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/jameschun7/go-gin-sample/pkg/app"
-	"github.com/jameschun7/go-gin-sample/pkg/e"
-	"github.com/jameschun7/go-gin-sample/pkg/logging"
-	"github.com/jameschun7/go-gin-sample/service/auth_service"
 	"github.com/mitchellh/mapstructure"
 	"google.golang.org/api/idtoken"
 )

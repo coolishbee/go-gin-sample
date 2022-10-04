@@ -5,12 +5,12 @@ import (
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
 
-	_ "github.com/jameschun7/go-gin-sample/docs"
-	"github.com/jameschun7/go-gin-sample/pkg/setting"
+	_ "github.com/coolishbee/go-gin-sample/docs"
+	"github.com/coolishbee/go-gin-sample/pkg/setting"
+	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
 
-	"github.com/jameschun7/go-gin-sample/routers/api"
+	"github.com/coolishbee/go-gin-sample/routers/api"
 )
 
 func InitRouter() *gin.Engine {

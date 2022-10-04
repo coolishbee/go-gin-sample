@@ -5,12 +5,12 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/coolishbee/go-gin-sample/models"
+	"github.com/coolishbee/go-gin-sample/pkg/logging"
+	"github.com/coolishbee/go-gin-sample/pkg/setting"
+	"github.com/coolishbee/go-gin-sample/pkg/util"
+	"github.com/coolishbee/go-gin-sample/routers"
 	"github.com/gin-gonic/gin"
-	"github.com/jameschun7/go-gin-sample/models"
-	"github.com/jameschun7/go-gin-sample/pkg/logging"
-	"github.com/jameschun7/go-gin-sample/pkg/setting"
-	"github.com/jameschun7/go-gin-sample/pkg/util"
-	"github.com/jameschun7/go-gin-sample/routers"
 )
 
 func init() {

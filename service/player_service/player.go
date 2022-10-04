@@ -1,6 +1,6 @@
 package player_service
 
-import "github.com/jameschun7/go-gin-sample/models"
+import "github.com/coolishbee/go-gin-sample/models"
 
 type Team struct {
 	TeamID int
