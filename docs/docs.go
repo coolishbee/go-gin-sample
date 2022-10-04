@@ -151,8 +151,12 @@ const docTemplate = `{
         },
         "/api/teamlist": {
             "get": {
+                "description": "구단정보 가져오기",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "팀관련 API"
                 ],
                 "summary": "Get team list",
                 "responses": {

@@ -14,6 +14,8 @@ type TeamInfo struct {
 }
 
 // @Summary Get team list
+// @Description 구단정보 가져오기
+// @Tags 팀관련 API
 // @Produce  json
 // @Success 200 {object} app.Response
 // @Failure 500 {object} app.Response

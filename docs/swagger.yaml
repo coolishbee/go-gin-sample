@@ -127,6 +127,7 @@ paths:
       summary: Add TeamInfo
   /api/teamlist:
     get:
+      description: 구단정보 가져오기
       produces:
       - application/json
       responses:
@@ -139,4 +140,6 @@ paths:
           schema:
             $ref: '#/definitions/app.Response'
       summary: Get team list
+      tags:
+      - 팀관련 API
 swagger: "2.0"
