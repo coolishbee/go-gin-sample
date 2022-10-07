@@ -41,9 +41,9 @@ func GetTeamList(c *gin.Context) {
 // @Router /api/team [post]
 func AddTeamInfo(c *gin.Context) {
 	appG := app.Gin{C: c}
-	teamInfo := &TeamInfo{}
+	var teamInfo TeamInfo
 
-	errCode := app.BindAndValid(c, teamInfo)
+	errCode := app.BindAndValid(c, &teamInfo)
 	if errCode != e.SUCCESS {
 		appG.Response(errCode, nil)
 		return
