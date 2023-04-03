@@ -51,8 +51,7 @@ $ go run main.go
 - Gin
 - App configurable
 - Logging
-- Social Login backend validate (Google, Facebook)
-- Login Session management
+- Social Login backend validate (Google, Facebook, Apple)
 - RedisDB
 
 ## TODO
